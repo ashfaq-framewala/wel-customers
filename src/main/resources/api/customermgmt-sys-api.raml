@@ -1,0 +1,55 @@
+#%RAML 1.0
+title: customermgmt-sys-api
+version: 1.1.0
+
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/fbb1a1c9-5c7d-4b5b-bce2-0fd20cbf0d25/api/v1 # baseUri: /api/v1
+
+/customers:
+  get:
+    queryParameters: 
+      type?:
+        type: string
+        description: type of customer
+        enum: ['Gold', 'Premium', 'Platinum']
+      customerId?:
+        type: string
+    responses: 
+      200:
+        body: 
+          application/json:
+            schema: 
+              type: array
+              items:
+                type: object
+                properties:
+                  customerId:
+                    type: string
+                  customerFirstName:
+                    type: string
+                  customerMiddleName?:
+                    type: string
+                  customerLastName:
+                    type: string
+                  customerDateOfBirth:
+                    type: date-only
+                  customerType:
+                    type: string
+                    enum: ['Gold', 'Premium', 'Platinum']
+            example: |
+              [ 
+                {
+                  "customerId" : "C729102",
+                  "customerFirstName" : "John",
+                  "customerLastName" :"Smith",
+                  "customerDateOfBirth" : "1980-02-11",
+                  "customerType" : "Gold"
+                },
+                {
+                  "customerId" : "C728721",
+                  "customerFirstName" : "David",
+                  "customerMiddleName" : "A",
+                  "customerLastName" :"Handcomb",
+                  "customerDateOfBirth" : "1962-08-09",
+                  "customerType" : "Platinum"      
+                }
+                ]
