@@ -1,0 +1,31 @@
+{
+  "policies": [
+      {
+        "order": 1,
+        "groupId": "68ef9520-24e9-4cf2-b2f5-620025690913",
+        "assetId": "header-injection",
+        "assetVersion": "1.2.1",
+        "configurationData": {
+            "outboundHeaders": [
+                {
+                "key": "Cache-Control",
+                "value": "no-store"
+                }
+            ]
+        }
+    },
+    {
+        "order": 2,
+        "groupId": "68ef9520-24e9-4cf2-b2f5-620025690913",
+        "assetId": "ip-blacklist",
+        "assetVersion": "1.2.2",
+        "configurationData": {
+            "ipExpression": "#[attributes.remoteAddress]",
+            "ips": [
+                "192.168.0.1/16",
+                "14.202.222.62"
+            ]
+        }
+    }
+  ]
+}
