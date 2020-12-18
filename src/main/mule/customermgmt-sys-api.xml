@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd ">
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
     <http:listener-config name="customermgmt-sys-api-httpListenerConfig">
         <http:listener-connection host="0.0.0.0" port="${http.private.port}" />
     </http:listener-config>
     <apikit:config name="customermgmt-sys-api-config" api="customermgmt-sys-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <configuration-properties doc:name="Configuration properties" doc:id="3b8aa7cd-26ba-4d9d-bf19-71dd3c99f229" file="dev.yaml" />
+	<flow name="customermgmt-sys-apiFlow" doc:id="786091c4-4f45-496c-83d9-3f7d31e6a993" >
+		<http:listener doc:name="Listener" doc:id="e9b04e06-4c84-4748-b810-ae57a4eaf100" config-ref="customermgmt-sys-api-httpListenerConfig" path="/test"/>
+		<logger level="INFO" doc:name="Logger" doc:id="a4780234-931c-4b94-a633-2210141d1bc5" message="All iz well"/>
+		<ee:transform doc:name="Transform Message" doc:id="b6e8eb37-51b7-4d73-9b29-c47f77736f32" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"test" : "one"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
 	<flow name="customermgmt-sys-api-main">
         <http:listener config-ref="customermgmt-sys-api-httpListenerConfig" path="/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
