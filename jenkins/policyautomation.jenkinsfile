@@ -51,25 +51,25 @@ pipeline {
             println "ClientID Var name is .... " + clientIdVarName + " .... " + clientSecretVarName
 
             def policiesFile = readJSON file: "${env.WORKSPACE}//src//main//resources//policies//" +  "${params.ENVIRONMENT}".toLowerCase() + ".json"
-            def arrraySize = policiesFile."policies".size()
+            //def arrraySize = policiesFile."policies".size()
 
             //for (int i=0;i<arrraySize; i++) {
-            policiesFile."policies".each {
-                println it
-                def policyName = it.assetId
-                if ( policyName == null || policyName == "" ) {
-                  print "Policy Name is not set. Probably is a Mule 4 API. Checking policyTemplateId"
-                  policyName = it.policyTemplateId
-                }
+            //policiesFile."policies".each {
+            //    println it
+            //    def policyName = it.assetId
+            //    if ( policyName == null || policyName == "" ) {
+            //      print "Policy Name is not set. Probably is a Mule 4 API. Checking policyTemplateId"
+            //      policyName = it.policyTemplateId
+            //    }
 
-                if ( policyName == null || policyName == "" ) {
-                  throw new Exception("PolicyName not found in the config file")
-                }
+            //    if ( policyName == null || policyName == "" ) {
+            //      throw new Exception("PolicyName not found in the config file")
+            //    }
                withCredentials([string(credentialsId: "${clientIdVarName}", variable: 'ANYPOINT_CLIENT_ID'),
                     string(credentialsId: "${clientSecretVarName}", variable: 'ANYPOINT_CLIENT_SECRET')]) {
                   println "Envid Is ... " + "${targetEnvID}"
 
-                  def parsed_data = groovy.json.JsonOutput.toJson(it).replace("\"", "\\\"")
+                  def parsed_data = groovy.json.JsonOutput.toJson(policiesFile).replace("\"", "\\\"")
                   println parsed_data
 
                   sh " /usr/local/bin/newman run $NEWMAN_APPLYPOLICY \
@@ -77,16 +77,15 @@ pipeline {
                           --env-var anypoint_clientsecret=${ANYPOINT_CLIENT_SECRET} \
                           --env-var anypoint_organisation=${params.ORGANISATION} \
                           --env-var environment_id=${targetEnvID} \
-                          --env-var policy_name=${policyName} \
-                          --env-var policy_data='${parsed_data}' \
+                          --env-var policy_file='${parsed_data}' \
                           --env-var api_name=${params.API_NAME} \
                           --env-var api_version=${params.API_VERSION} \
                           --disable-unicode \
                           --reporters cli,json \
                           --reporter-json-export apply-policies-output.json "
               }
-            } // end for each policy in config file
-          }
+          //  } // end for each policy in config file
+          //}
         }
         post {
             success {
