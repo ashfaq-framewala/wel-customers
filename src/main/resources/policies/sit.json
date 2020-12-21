@@ -26,6 +26,17 @@
                 "10.252.0.0"
             ]
         }
+    },
+    {
+      "configurationData": {
+          "credentialsOriginHasHttpBasicAuthenticationHeader": "customExpression",
+          "clientIdExpression": "#[attributes.headers['client_id_1']]",
+          "clientSecretExpression": "#[attributes.headers['client_secret_1']]"
+      },
+      "order": 3,
+       "groupId": "68ef9520-24e9-4cf2-b2f5-620025690913",
+       "assetId": "client-id-enforcement",
+       "assetVersion": "1.2.2",
     }
   ]
 }
