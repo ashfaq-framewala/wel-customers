@@ -22,7 +22,8 @@
         "configurationData": {
             "ipExpression": "#[attributes.remoteAddress]",
             "ips": [
-                "10.152.10.4/24"
+                "10.152.10.4/24",
+                "10.252.0.0"
             ]
         }
     }
