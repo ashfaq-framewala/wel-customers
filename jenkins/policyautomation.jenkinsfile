@@ -51,21 +51,7 @@ pipeline {
             println "ClientID Var name is .... " + clientIdVarName + " .... " + clientSecretVarName
 
             def policiesFile = readJSON file: "${env.WORKSPACE}//src//main//resources//policies//" +  "${params.ENVIRONMENT}".toLowerCase() + ".json"
-            //def arrraySize = policiesFile."policies".size()
-
-            //for (int i=0;i<arrraySize; i++) {
-            //policiesFile."policies".each {
-            //    println it
-            //    def policyName = it.assetId
-            //    if ( policyName == null || policyName == "" ) {
-            //      print "Policy Name is not set. Probably is a Mule 4 API. Checking policyTemplateId"
-            //      policyName = it.policyTemplateId
-            //    }
-
-            //    if ( policyName == null || policyName == "" ) {
-            //      throw new Exception("PolicyName not found in the config file")
-            //    }
-               withCredentials([string(credentialsId: "${clientIdVarName}", variable: 'ANYPOINT_CLIENT_ID'),
+            withCredentials([string(credentialsId: "${clientIdVarName}", variable: 'ANYPOINT_CLIENT_ID'),
                     string(credentialsId: "${clientSecretVarName}", variable: 'ANYPOINT_CLIENT_SECRET')]) {
                   println "Envid Is ... " + "${targetEnvID}"
 
@@ -84,8 +70,7 @@ pipeline {
                           --reporters cli,json \
                           --reporter-json-export apply-policies-output.json "
               }
-          //  } // end for each policy in config file
-          //}
+          }
         }
         post {
             success {
@@ -98,4 +83,3 @@ pipeline {
       }
     }
   }
-}
