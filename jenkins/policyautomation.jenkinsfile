@@ -68,7 +68,7 @@ pipeline {
                           --env-var policy_file='${parsed_data}' \
                           --env-var api_name=${params.API_NAME} \
                           --env-var api_version=${params.API_VERSION} \
-                          --env-var delete_policies_config=${parms.DELETE_POLICIES} \
+                          --env-var delete_policies_config=${params.DELETE_POLICIES} \
                           --disable-unicode \
                           --reporters cli,json \
                           --reporter-json-export apply-policies-output.json "
