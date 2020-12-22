@@ -50,28 +50,26 @@ pipeline {
             def clientIdVarName = "${params.ORGANISATION}".toLowerCase() +  "_" +  "${params.ENVIRONMENT}".toLowerCase() + "_" + "client_id"
             def clientSecretVarName = "${params.ORGANISATION}".toLowerCase() +  "_" +  "${params.ENVIRONMENT}".toLowerCase() + "_" + "client_secret"
             println "ClientID Var name is .... " + clientIdVarName + " .... " + clientSecretVarName
-            println "Delete policy config is ..." + "${params.DELETE_POLICIES}"
+            println "Envid Is ... " + "${targetEnvID}"
 
             def policiesFile = readJSON file: "${env.WORKSPACE}//src//main//resources//policies//" +  "${params.ENVIRONMENT}".toLowerCase() + ".json"
             withCredentials([string(credentialsId: "${clientIdVarName}", variable: 'ANYPOINT_CLIENT_ID'),
                     string(credentialsId: "${clientSecretVarName}", variable: 'ANYPOINT_CLIENT_SECRET')]) {
-                  println "Envid Is ... " + "${targetEnvID}"
 
                   def parsed_data = groovy.json.JsonOutput.toJson(policiesFile).replace("\"", "\\\"")
-                  println parsed_data
 
-                  sh " /usr/local/bin/newman run $NEWMAN_APPLYPOLICY \
+                  sh ' /usr/local/bin/newman run $NEWMAN_APPLYPOLICY \
                           --env-var anypoint_clientid=${ANYPOINT_CLIENT_ID} \
                           --env-var anypoint_clientsecret=${ANYPOINT_CLIENT_SECRET} \
                           --env-var anypoint_organisation=${params.ORGANISATION} \
                           --env-var environment_id=${targetEnvID} \
-                          --env-var policy_file='${parsed_data}' \
+                          --env-var policy_file=${parsed_data} \
                           --env-var api_name=${params.API_NAME} \
                           --env-var api_version=${params.API_VERSION} \
                           --env-var delete_policies_config=${params.DELETE_POLICIES} \
                           --disable-unicode \
                           --reporters cli,json \
-                          --reporter-json-export apply-policies-output.json "
+                          --reporter-json-export apply-policies-output.json '
               }
           }
         }
