@@ -15,7 +15,7 @@ pipeline {
         choice( name: 'ORGANISATION', choices: "Digital", description: 'Business Organisation' )
         string( name: 'API_NAME', defaultValue: 'Test API', description: 'API name as set in Anypoint Exchange' )
         string( name: 'API_VERSION', defaultValue: '1.0', description: 'API version' )
-        boolean( name: 'DELETE_POLICIES', defaultValue: false, description: 'Choose if policies defined in API Manager but not in the config file are to be removed')
+        booleanParam( name: 'DELETE_POLICIES', defaultValue: false, description: 'Choose if policies defined in API Manager but not in the config file are to be removed')
     }
     tools {
         maven 'M3'
@@ -68,7 +68,7 @@ pipeline {
                           --env-var policy_file='${parsed_data}' \
                           --env-var api_name=${params.API_NAME} \
                           --env-var api_version=${params.API_VERSION} \
-                          --env-var delete_policies_config=${params.API_VERSION} \
+                          --env-var delete_policies_config=${parms.DELETE_POLICIES} \
                           --disable-unicode \
                           --reporters cli,json \
                           --reporter-json-export apply-policies-output.json "
