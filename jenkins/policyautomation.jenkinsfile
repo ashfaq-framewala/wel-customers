@@ -50,7 +50,7 @@ pipeline {
             def clientIdVarName = "${params.ORGANISATION}".toLowerCase() +  "_" +  "${params.ENVIRONMENT}".toLowerCase() + "_" + "client_id"
             def clientSecretVarName = "${params.ORGANISATION}".toLowerCase() +  "_" +  "${params.ENVIRONMENT}".toLowerCase() + "_" + "client_secret"
             println "ClientID Var name is .... " + clientIdVarName + " .... " + clientSecretVarName
-            println "Delete policy config is ..." + "${parms.DELETE_POLICIES}"
+            println "Delete policy config is ..." + "${params.DELETE_POLICIES}"
 
             def policiesFile = readJSON file: "${env.WORKSPACE}//src//main//resources//policies//" +  "${params.ENVIRONMENT}".toLowerCase() + ".json"
             withCredentials([string(credentialsId: "${clientIdVarName}", variable: 'ANYPOINT_CLIENT_ID'),
