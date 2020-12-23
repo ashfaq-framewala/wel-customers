@@ -28,7 +28,7 @@ pipeline {
                 script {
                   def githubUrl = scm.userRemoteConfigs[0].url
                   print "GitHub URL: " + githubUrl
-                  echo "Checking out Release from GitHub..."
+                  echo "Checking out from GitHub..."
                 }
                 echo "${env.WORKSPACE}"
                 echo "Jenkins home is ${env.JENKINS_HOME}"
