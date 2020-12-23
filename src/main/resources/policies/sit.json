@@ -23,7 +23,7 @@
             "ipExpression": "#[attributes.remoteAddress]",
             "ips": [
                 "10.152.10.4/24",
-                "192.168.0.1/16"
+                "192.168.0.1"
             ]
         }
     },
