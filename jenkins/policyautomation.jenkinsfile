@@ -54,7 +54,7 @@ pipeline {
                     string(credentialsId: "${clientSecretVarName}", variable: 'ANYPOINT_CLIENT_SECRET')]) {
 
                   def parsed_data = groovy.json.JsonOutput.toJson(policiesFile).replace("\"", "\\\"")
-                  parsed_data = parse_data.bytes.encodeBase64().toString()
+                  parsed_data = parsed_data.bytes.encodeBase64().toString()
 
                   sh """ /usr/local/bin/newman run $NEWMAN_APPLYPOLICY \
                           --env-var anypoint_clientid=${ANYPOINT_CLIENT_ID} \
