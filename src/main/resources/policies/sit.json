@@ -29,6 +29,7 @@
             "mandatoryExpClaim": false,
             "mandatoryNbfClaim": false,
             "validateCustomClaim": true,
+            "textKey" : "testkey",
             "mandatoryCustomClaims": [
                 {
                     "key": "aud",
