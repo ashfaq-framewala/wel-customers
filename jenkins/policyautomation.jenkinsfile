@@ -5,7 +5,7 @@ pipeline {
     environment {
         BUILD_VERSION = "v${currentBuild.number}.RELEASE"
         WORKSPACE = pwd()
-        ENVIRONMENT_IDS_JSON = "${env.JENKINS_HOME}" + "/environment_ids.json"
+        ENVIRONMENT_IDS_JSON = "${env.JENKINS_HOME}" + "conf/environment_ids.json"
         DIGITAL_ORG = "Digital"
         NEWMAN_APPLYPOLICY = "${env.JENKINS_HOME}" + "/postman/scripts/Apply_Policies.postman_collection.json"
         PATH = "/usr/local/bin:$PATH"
@@ -16,9 +16,6 @@ pipeline {
         string( name: 'API_NAME', defaultValue: 'Test API', description: 'API name as set in Anypoint Exchange' )
         string( name: 'API_VERSION', defaultValue: '1.0', description: 'API version' )
         booleanParam( name: 'DELETE_POLICIES', defaultValue: false, description: 'Choose if policies defined in API Manager but not in the config file are to be removed')
-    }
-    tools {
-        maven 'M3'
     }
     stages{
         stage('Prepare') {
