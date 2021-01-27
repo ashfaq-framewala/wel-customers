@@ -45,7 +45,6 @@ pipeline {
             def clientIdVarName = "${params.ORGANISATION}".toLowerCase() +  "_" +  "${params.ENVIRONMENT}".toLowerCase() + "_" + "client_id"
             def clientSecretVarName = "${params.ORGANISATION}".toLowerCase() +  "_" +  "${params.ENVIRONMENT}".toLowerCase() + "_" + "client_secret"
             println "ClientID Var name is .... " + clientIdVarName + " .... " + clientSecretVarName
-            println "Envid Is ... " + "${targetEnvID}"
 
             def policiesFile = readJSON file: "${env.WORKSPACE}//src//main//resources//policies//" +  "${params.ENVIRONMENT}".toLowerCase() + ".json"
             withCredentials([string(credentialsId: "${clientIdVarName}", variable: 'ANYPOINT_CLIENT_ID'),
