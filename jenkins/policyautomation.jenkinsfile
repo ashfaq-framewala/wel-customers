@@ -42,8 +42,6 @@ pipeline {
       stage('Apply policies') {
         steps {
           script {
-            def envIDs = readJSON file: "${env.ENVIRONMENT_IDS_JSON}"
-            def targetEnvID = envIDs."${env.DIGITAL_ORG}"."${params.ENVIRONMENT}"
             def clientIdVarName = "${params.ORGANISATION}".toLowerCase() +  "_" +  "${params.ENVIRONMENT}".toLowerCase() + "_" + "client_id"
             def clientSecretVarName = "${params.ORGANISATION}".toLowerCase() +  "_" +  "${params.ENVIRONMENT}".toLowerCase() + "_" + "client_secret"
             println "ClientID Var name is .... " + clientIdVarName + " .... " + clientSecretVarName
@@ -60,7 +58,7 @@ pipeline {
                           --env-var anypoint_clientid=${ANYPOINT_CLIENT_ID} \
                           --env-var anypoint_clientsecret=${ANYPOINT_CLIENT_SECRET} \
                           --env-var anypoint_organisation=${params.ORGANISATION} \
-                          --env-var environment_id=${targetEnvID} \
+                          --env-var environment_name=${params.ENVIRONMENT} \
                           --env-var policy_file="${parsed_data}" \
                           --env-var api_name=${params.API_NAME} \
                           --env-var api_version=${params.API_VERSION} \
